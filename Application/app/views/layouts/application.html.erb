@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>TTMS</title>
+    <%= stylesheet_link_tag 'blue/style.css' %>
+    <%= stylesheet_link_tag 'style.css' %>
+    <%= stylesheet_link_tag 'ibox.css' %>
+    <%= stylesheet_link_tag 'menu.css' %>
+    <%= stylesheet_link_tag 'jquery-ui-1.8.6.custom.css' %>
+    <%= stylesheet_link_tag 'jquery.lightbox-0.5.css' %>
+    <%= stylesheet_link_tag 'vtip.css' %>
+    <%= javascript_include_tag :all %>
+    <%= csrf_meta_tag %>
+    <script type="text/javascript">
+      $(function(){
+      $("form[data-update]")
+      .live("ajax:success",function(data,status,xhr){
+      var link = $(this);
+      $("#" + link.attr("data-update")).html(status);
+      });
+      });
+    </script>
+    <script type="text/javascript">
+      $(function(){
+      $("a[data-update]")
+      .live("ajax:success",function(data,status,xhr){
+      var link = $(this);
+      $("#" + link.attr("data-update")).html(status);
+      });
+      });
+    </script>
+    <script type="text/javascript">
+      $(function(){
+      $("table")
+      .tablesorter({widthFixed: true, widgets: ['zebra']});
+      });
+    </script>
+    <script type="text/javascript">
+      $(function() {  
+      $('#gallery').lightBox();  
+      });  
+    </script>
+    <script type="text/javascript">
+      $(function(){
+      $("#tab").tabs();
+      });
+    </script>
+    <script type="text/javascript" charset="utf-8">
+      $(function(){
+      $('#tabs > ul').tabs();
+      });
+    </script>
+  </head>
+  <body>
+    <div id="twitter">
+      <%= link_to 'アンケートフォーム表示',{:action => :twitter_form}, {:remote => true, "data-type" => "html", "data-update" => "twitter"}%>
+    </div>
+    <div id="wrap">
+      <div id="header">
+	<div id="logo-text">
+	  <% if @projects %>
+	   プロジェクト一覧
+	  <% elsif @tickets %>
+	    プロジェクト詳細
+	  <% elsif @user_list %>
+	    ユーザ一覧
+	  <% else %>
+	    <% if @project %>
+	      <%= Project.find(@project).name %><span id="small">::
+		<% if @ticket %>
+		  <%= @ticket.name %>
+		<% else %>
+		  すべて
+		<% end %>
+	      </span><br><span id="small">　
+	      <% if session[:user_id] ==  @user.id%>
+		あなたの
+	      <% else %>
+		<%= @user.login %>さんの
+	      <% end %>
+	      <%= tm_layout_day @type %>の作業時間</span>
+	    <% else %>
+	      
+	    <% end %>
+	  <% end %>
+	</div>
+	<div id="top-menu">
+	  <p><%= link_to :logout, logout_path %> | 
+	    <%= link_to "suppotter", 'http://suppotter.com/', :target => '_blink' %></p>
+	  <%- flash.each do |name, msg| -%>
+	    <div class='flash_<%= name %>'>
+	      <%= msg %>
+	    </div>
+	  <%- end -%>
+	</div>
+      </div>
+      <div>
+      <div id="menu">
+	  <ul class="menu">
+	    <li><a href="<%= url_for :action => :twitter %>" class="parent"><span>ホーム</span></a></li>
+	    <li><a href="#" class="parent"><span>参加プロジェクト</span></a>
+	      <%= render :partial => 'project', :locals => {:projects => Group.projects(@user.id)} %>
+	    </li>
+	    <li><a href="<%= url_for :action => :user_list %>"><span>ユーザ一覧</span></a></li>
+	    <li class="last"><a href="<%= url_for :action => :project_list %>"><span>プロジェクト一覧</span></a></li>
+	   <li><a href="#"><span>使い方</span></a></li>
+	  </ul>
+	</div>
+	  </div>
+      <div id="content">
+	<div id="main">
+	  <%= yield %>
+      </div>
+      <div id="sidebar">
+	<h3>ユーザ名</h3>
+	<p><%= @user.login %>さん</p>
+	<h3>検索日</h3>
+	<div id="cal">
+	  <% @cal = @date unless @cal%>
+	  <%= link_to '<<',{:action => :cal,:user => @user.login, :date => @date, :cal => @cal.ago(2.month).next_month, :type => @type, :project => @project, :ticket => @t_name},{:remote => true, "data-type" => "html", "data-update" => 'cal'} %>
+	  <%= @cal.year%>年<%= @cal.month %>月
+	  <%= link_to '>>',{:action => :cal,:user => @user.login, :date => @date, :cal => @cal.next_month, :type => @type, :project => @project, :ticket => @t_name},{:remote => true, "data-type" => "html", "data-update" => 'cal'} %>	  
+	  <%= calender(@date).html_safe %>
+	</div>
+	<h3>単位指定</h3>
+	<ul>
+	  <li><%= link_to '24時間', {:action => :day,:user => @user.login, :date => @date, :project => @project, :ticket => @t_name}, {}%>
+	  <li><%= link_to '日単位', {:action => :day,:user => @user.login, :date => @date, :type => :day, :project => @project, :ticket => @t_name}, {}%>
+	  <li><%= link_to '週単位', {:action => :day,:user => @user.login, :date => @date, :type => :week, :project => @project, :ticket => @t_name}, {}%></li>
+	  <li><%= link_to '月単位', {:action => :day, :user => @user.login, :date => @date, :type => :month, :project => @project, :ticket => @t_name}, {} %></li>
+	 <!-- <li><%= link_to '一年', {:action => :day, :user => @user.login, :date => @date, :type => :year, :project => @project, :ticket => @t_name},{} %></li> -->
+	</ul>
+      </div>
+      </div>
+      <div id="footer"><a href="http://apycom.com/"></a></div>
+    </div>
+  </body>
+</html>

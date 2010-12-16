@@ -1,0 +1,7 @@
+<%= link_to '編集',{:action => :search, :project => @project.id}, {:remote => true, "data-type" => "html", "data-update" => 'edit'}%>
+<h3><p><% if @project.outline %>
+    <%= @project.outline %>
+  <% else %>
+    まだ何も設定されていません
+  <% end %>
+</p></h3>

@@ -1,0 +1,41 @@
+<% if @tweets %>
+<tr>
+  <td>Tweet URL</td>
+  <td>Tweet Time</td>
+  <td>Other</td>
+</tr>
+<% @tweets.each do |tweet| %>
+<tr>
+  <td><%= tweet.tweet_url %></td>
+  <td><%= tweet.tweet_time %></td>
+  <td><%= tweet.comment %></td>
+</tr>
+<% end end %>
+
+<% if @projects %>
+<tr>
+  <td>Project id</td>
+  <td>Project name</td>
+</tr>
+<% @projects.each do |project| %>
+<tr>
+  <td><%= project.project_id %></td>
+  <td><%= project.project.project_name %></td>
+</tr>
+<% end end %>
+
+<% if @users %>
+  <thead>
+    <tr>
+      <td>User id</td>
+      <td>User name</td>
+    </tr>
+  </thead>
+  <tbody>
+    <% @users.each do |user| %>
+      <tr>
+	<td><%= user.user_id %></td>
+      <td><%= link_to user.user.name, :action => :p_user, :user_id => user.user_id %></td>
+    </tr>
+<% end end %>
+</tbody>

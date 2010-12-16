@@ -1,0 +1,27 @@
+<h1>
+  <p id="text-center"><%= Group.joins(:user).where(:project_id => @project, :master => true).first.user.login %># <%= link_to @project.name, :action => :day, :user => @user.login, :project => @project %></p>
+</h1>
+<h2>概要</h2>
+<div id="edit">
+ <%= link_to '編集',{:action => :search, :project => @project}, {:remote => true, "data-type" => "html", "data-update" => 'edit'}%>
+<h3><p><% if @project.outline %>
+    <%= @project.outline %>
+  <% else %>
+    まだ何も設定されていません
+  <% end %>
+</p></h3>
+</div>
+<% @tickets.each_with_index do |ticket, i|%>
+<h2>>> <%= link_to ticket.name,{:action => :day, :user => @user.login, :project => @project, :ticket => ticket.name} %></h2>
+<h3>概要:
+  <% if ticket.outline %>
+    <%= ticket.outline %>
+  <% else %>
+    設定なし
+  <% end %>
+</h3>
+<div id="comment<%= i %>">
+<%= link_to 'コメント表示',{:action => :comment, :ticket => ticket.id, :su => i}, {:remote => true, "data-type" => "html", "data-update" => "comment#{i}"}%>
+</div>
+<% end %>
+

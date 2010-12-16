@@ -1,0 +1,7 @@
+<%= form_for @project, :url => {:controller => 'ttms', :action => 'edit'}, :html => {:method => :get, :remote => true, "data-type" => "html", "data-update" => "edit"} do |f| %>
+概要<br />
+<%= f.hidden_field :id, :value => @project.id %>
+<%= f.text_area :outline, :size=>"60x10" %>
+<%= f.submit '編集' %><%= link_to 'キャンセル',{:action => :search, :project => @project, :cansell => :true}, {:remote => true, "data-type" => "html", "data-update" => "edit"}%>
+
+<% end %>

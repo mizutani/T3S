@@ -1,0 +1,5 @@
+<%= form_for search_project, :url => {:controller => 'ttms', :action => 'index'}, :html => {:method => :get} do |f| %>
+プロジェクト検索<br />
+<%= f.search_field :ticket, :size => 20 %>
+<%= f.submit '検索' %>
+<% end %>

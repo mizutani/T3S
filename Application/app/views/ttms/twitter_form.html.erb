@@ -1,0 +1,19 @@
+<%= form_for :twitter, :url => {:controller => 'ttms', :action => 'twitter_create'}, :html => {:method => :post, :remote => true, "data-type" => "html", "data-update" => "twitter"} do |f| %>
+アンケート投稿<br />
+<!-- <%= f.text_area :text, :size=>"60x10" %> -->
+悪い < --- > 良い<br />
+<% @list.each do |group, value |%>
+<%= value %><br />
+<% 5.times do |i| %>
+  <% if i == 0%>
+  <label><%= f.radio_button group, i + 1, :checked => true %><%= i + 1 %></label>
+  <% else %>
+  <label><%= f.radio_button group, i + 1 %><%= i + 1 %></label>
+  <% end %>
+<% end %>
+<br />
+<% end %>
+その他コメントを100文字以内でお願いします
+<%= f.text_area :comment, :size => '60x10' %>
+<%= f.submit '投稿' %><%= link_to 'キャンセル',{:action => :twitter_create, :cansell => :true}, {:remote => true, "data-type" => "html", "data-update" => "twitter"}%>
+<% end %>

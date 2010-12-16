@@ -1,0 +1,4 @@
+<% @projects.each do |project| %>
+  <% usr = Group.joins(:user).where(:project_id => project.id, :master => true).first %>
+  <p><%= link_to "#{usr.user.login}# #{project.name}", :action => :p_more, :project => project.id, :user => @user.login %></p>
+<% end %>

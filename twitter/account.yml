@@ -1,0 +1,12 @@
+twitter:
+  sk: Consumer key
+  ce: Consumer secret
+  at: Access token
+  ats: Access token secret
+mysql:
+  adapter: mysql2
+  host: localhost
+  username: root
+  database: ttms_development
+  password:
+  encoding: utf8

@@ -1,0 +1,36 @@
+<h2>プロジェクトの作業時間</h2>
+<h3>
+<%= link_to '<<', :action => :day, :date => step(@type, @date, '<<'), :user => @user.login, :type => @type, :project => @project, :ticket => @t_name %>
+<%= tm_sagyoubi(@date) %>
+<%= link_to '>>', :action => :day, :date => step(@type, @date, '>>'), :user => @user.login, :type => @type, :project => @project, :ticket => @t_name %>
+<% if @data.size != 0 %>
+<%= @graph.html_safe %>
+<!--
+  <%= link_to_ibox "グラフを表示する", :for => '#inner_content', :size => "510x510"%>
+  <div id="inner_content" style="display:none;">
+    <%= @graph.html_safe %>
+  </div>
+-->
+<% else %>
+<br>作業データはありません
+<% end %>
+</h3>
+<% @data.each do |data| %>
+<h2><%==  data[0] %></h2>
+<table class="tablesorter" border="0" cellpadding="0" cellspacing="1">
+  <thead>
+    <tr>
+      <th>作業日</th>
+      <th>作業時間</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% data[1].to_a.sort{|a, b| a[0] <=> b[0]}.each do |array| %>
+      <tr>
+	<td><%= link_to tm_sagyoubi(array[0]), :action => :day, :date => array[0], :project => @project, :ticket => data[0] %></td>
+	<td ><%= tm_time array[1] %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<% end %>

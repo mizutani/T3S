@@ -1,0 +1,21 @@
+<h2>プロジェクトごとの作業時間</h2>
+<% if @data %>
+   <table class="tablesorter" border="0" cellpadding="0" cellspacing="1">
+    <thead>
+      <tr>
+	<th>プロジェクト名</th>
+	<th>作業時間</th>
+      </tr>
+    </thead>
+    <tbody>
+<% @data.each do |data| %>
+      <% unless data[1] == 0 %>
+	<tr>
+	  <td><%= data[0] %></td>
+	  <td><%= tm_time data[1] %></td>
+	</tr>
+      <% end %>
+<% end %>
+    </tbody>
+  </table>
+<% end %>

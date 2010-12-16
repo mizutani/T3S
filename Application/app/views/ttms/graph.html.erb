@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>グラフ</title>
+<%= stylesheet_link_tag 'ibox.css' %>
+<%= javascript_include_tag :all %>
+<%= csrf_meta_tag %>
+</head>
+<body>
+  <%= link_to_ibox "View Page", :for => '#inner_content', :size => "600x600" %>
+<div id="inner_content" style="display:none;">
+  <%= @graph.html_safe %>
+</div>
+<%= link_to "戻る", request.env["HTTP_REFERER"] %>
+
+</body>
+</html>

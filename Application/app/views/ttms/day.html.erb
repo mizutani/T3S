@@ -1,0 +1,62 @@
+<p><%= link_to '前日', {:action => :day, :user => @user.login, :date => @date.yesterday, :project => @project, :ticket => @t_name}, {}%> | <%= link_to '翌日', {:action => :day,:user => @user.login,  :date => @date.tomorrow, :project => @project, :ticket => @t_name}, {} %></p>
+<% if @graph %>
+<%= @graph.html_safe %>
+<% end %>
+<% if @data && !@data.empty?%>
+<h2>作業詳細</h2>
+<table class="tablesorter" border="0" cellpadding="0" cellspacing="1">
+  <thead>
+    <tr>
+      <th>作業開始</th>
+      <th>作業終了</th>
+      <th>作業時間</th>
+      <th>休憩時間</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @data.each do |data| %>
+      <tr>
+	<% 4.times do |i| %>
+	  <td><%= data[i] %></td>
+	<% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<% else %>
+<h2>
+  <% case @date %>
+  <% when Date.today %>
+  本日
+  <% when Date.today.yesterday %>
+  昨日
+<% else %>
+  <%= @date %>
+<% end %>
+の作業ありません
+</h2>
+<% end %>
+<% if @comment %>
+  <h2>作業時のコメント</h2>
+  <table class="tablesorter" border="0" cellpadding="0" cellspacing="1">
+    <thead>
+      <tr>
+	<th>ユーザ名</th>
+	<th>発言時間</th>
+	<th>コマンド</th>
+	<th>コメント</th>
+      </tr>
+    </thead>
+    <tbody>    
+      <% @comment.each do |array| %>
+	<tr>
+	  <td><%= array[0] %></td>
+	  <td><%= link_to (tm_sagyoutime array[1]), array[4], :target => '_blink' %></td>
+	  <td><%= array[2] %></td>
+	  <td><%= array[3].html_safe %></td>
+	</tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>
+

@@ -1,0 +1,13 @@
+<div><ul>
+  <% projects.each do |project| %>
+    <li><a href="<%= url_for :action => :p_more, :user => @user.login, :date => @date, :type => @type, :project => project.project_id %>"><span>
+	  <% user = Group.joins(:user).where(:project_id => project.project_id, :master => true).first %>
+<% if user.user.id == session[:user_id]%>
+<%= project.project.name %>
+<% else %>
+<%= user.user.login %># <%= project.project.name %>
+<% end %>
+</span></a></li>
+  <% end %>
+</ul>
+</div>

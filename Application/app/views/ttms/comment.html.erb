@@ -1,0 +1,24 @@
+<%= link_to 'コメント非表示',{:action => :not_comment, :ticket => @ticket, :su => @su}, {:remote => true, "data-type" => "html", "data-update" => "comment#{@su}"}%>
+<% if @comments %>
+  <h2>作業時のコメント</h2>
+  <table class="tablesorter" border="0" cellpadding="0" cellspacing="1">
+    <thead>
+      <tr>
+	<th>ユーザ名</th>
+	<th>発言時間</th>
+	<th>コマンド</th>
+	<th>コメント</th>
+      </tr>
+    </thead>
+    <tbody>    
+      <% @comments.each do |comment| %>
+	<tr>
+	  <td><%= User.find(comment.user_id).login %></td>
+	  <td><%= link_to comment.time, comment.url, :target => '_blink' %></td>
+	  <td><%= Cmd.find(comment.cmd_id).cmd %></td>
+	  <td><%= comment.comment.html_safe %></td>
+	</tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>

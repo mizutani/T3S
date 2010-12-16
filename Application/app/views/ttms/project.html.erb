@@ -1,0 +1,6 @@
+<% tabs_tag :open_tabs => { :id => "tabs", :class => "cool"} do |tab | %>
+<%= tab.project "詳細", {:action => :p_more, :project_id => @project_id}%>
+<%= tab.ticket "すべて", {:action => :ticket, :ticket => 0, :project_id => @project_id}%>
+<% @tickets.each do |ticket| %>
+  <%= tab.ticket  ticket.name, {:action => :ticket, :ticket => ticket.id, :project_id => @project_id}%>
+<% end end %>

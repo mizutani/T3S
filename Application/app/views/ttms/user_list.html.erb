@@ -1,0 +1,3 @@
+<% @users.each do |user| %>
+<p><%= link_to user.login, :action => :index, :user => user.login %></p>
+<% end %>

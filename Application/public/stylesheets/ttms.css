@@ -1,0 +1,49 @@
+#graph{
+    width:400px;
+    height:400px;
+}
+/*Page Layout（3段組み）*/
+#container {
+    display: box;
+    display: -moz-box;
+    display: -webkit-box;
+    width:750px;
+    border: 10px solid #fc6;
+    margin: 10px auto;
+    border-radius: 15px;
+    -moz-border-radius: 15px;
+    -webkit-border-radius: 15px;
+    behavior: url(/PIE/PIE.htc);
+}
+
+#box1{
+    width: 550px;
+    background: #FFFF99;
+    behavior: url(/PIE/PIE.htc);
+}
+#box2{
+    width: 202px;
+    background: #FFCC00;
+    text-align: left;
+    behavior: url(/PIE/PIE.htc);
+}
+#title{
+    font-size: x-large;
+    text-align:center;
+}
+#text_center{
+    text-align:center;
+}
+#red{
+    color: red;
+    font-weight: bold;
+}
+#margin-auto{
+    margin: auto;
+}
+#margin-20{
+    margin: 20px 20px;
+}
+body{
+text-align:center;
+}

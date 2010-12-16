@@ -1,0 +1,34 @@
+<p><%= link_to '翌日', {:action => :day,:user => @user.login,  :date => @date.tomorrow, :type => :day, :project => @project, :ticket => @t_name}, {} %> | <%= link_to '前日', {:action => :day, :user => @user.login, :date => @date.yesterday,  :type => :day, :project => @project, :ticket => @t_name}, {}%></p>
+<h2>
+  <% case @date %>
+  <% when Date.today %>
+  本日
+  <% when Date.today.yesterday %>
+  昨日
+<% else %>
+  <%= @date %>
+<% end %>
+作業を行った時間
+</h2>
+<h3>
+  <%= @graph.html_safe %>
+</h3>
+<div id="some_div">
+<table class="tablesorter" border="0" cellpadding="0" cellspacing="1">
+<thead> 
+ <tr>
+    <th>作業名</th>
+    <th>作業時間</th>
+  </tr>
+</thead>
+<tbody>
+  <% @data.to_a.sort{|a,b| a[0] <=> b[0]}.each do |array| %>
+  <tr>
+    <td><%= array[0] %></td>
+    <td><%= tm_time array[1] %></td>
+  </tr>
+  <% end %>
+</tbody>
+</table>
+</div>
+
